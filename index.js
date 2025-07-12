@@ -8,6 +8,7 @@ import availabilityRouter from './routes/availability.js';
 import authRouter from './routes/auth.js';
 import userRoutes from './routes/userRoutes.js';
 import adminRoutes from './routes/admin.js'; // ✅ added admin routes
+import paymentRoutes from './routes/payment.js'; // Adjust path if needed
 
 import errorHandler from './middleware/errorHandler.js';
 
@@ -25,6 +26,7 @@ app.use('/api/users', userRoutes);          // 🧑 User profile
 app.use('/api/bookings', bookingsRouter);   // 📅 Booking endpoints
 app.use('/api/availability', availabilityRouter); // 📆 Time slot availability
 app.use('/api/admin', adminRoutes);         // 🛡️ Admin panel routes
+app.use('/api/payment', paymentRoutes);
 
 // ✅ Basic Test Route
 app.get('/', (req, res) => {
