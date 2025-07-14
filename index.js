@@ -18,7 +18,7 @@ const app = express();
 
 // ✅ CORS Configuration
 const allowedOrigins = [
-  'http://localhost:5173', // for local development
+   // for local development
   'https://bookease-client-uxab.vercel.app' // for production frontend
 ];
 
