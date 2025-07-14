@@ -4,17 +4,17 @@ import crypto from 'crypto';
 
 const router = express.Router();
 
+// 🔐 Razorpay config
 const razorpay = new Razorpay({
   key_id: process.env.RAZORPAY_KEY_ID,
   key_secret: process.env.RAZORPAY_KEY_SECRET,
 });
 
-// 🔹 Create Razorpay Order
+// 🔹 Create Razorpay Order (Fixed ₹1)
 router.post('/create-order', async (req, res) => {
-  const { amount } = req.body;
-
+  const amountInRupees = 1; // ✅ Always ₹1
   const options = {
-    amount: amount * 100, // Convert ₹ to paise
+    amount: amountInRupees * 100, // Razorpay expects amount in paise
     currency: 'INR',
     receipt: `receipt_order_${Date.now()}`
   };
@@ -23,7 +23,7 @@ router.post('/create-order', async (req, res) => {
     const order = await razorpay.orders.create(options);
     res.json({ orderId: order.id });
   } catch (error) {
-    console.error('Razorpay Order Error:', error);
+    console.error('❌ Razorpay Order Error:', error);
     res.status(500).json({ error: 'Failed to create Razorpay order' });
   }
 });

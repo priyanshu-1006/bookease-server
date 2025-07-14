@@ -7,8 +7,8 @@ import bookingsRouter from './routes/bookings.js';
 import availabilityRouter from './routes/availability.js';
 import authRouter from './routes/auth.js';
 import userRoutes from './routes/userRoutes.js';
-import adminRoutes from './routes/admin.js'; // ✅ added admin routes
-import paymentRoutes from './routes/payment.js'; // Adjust path if needed
+import adminRoutes from './routes/admin.js';
+import paymentRoutes from './routes/payment.js';
 
 import errorHandler from './middleware/errorHandler.js';
 
@@ -16,21 +16,31 @@ dotenv.config();
 
 const app = express();
 
-// ✅ Middlewares
-app.use(cors());
+// ✅ CORS Configuration
+const allowedOrigins = [
+  'http://localhost:5173', // for local development
+  'https://bookease-client-uxab.vercel.app' // for production frontend
+];
+
+app.use(cors({
+  origin: allowedOrigins,
+  credentials: true
+}));
+
+// ✅ Body Parser
 app.use(express.json());
 
 // ✅ Routes
 app.use('/api/auth', authRouter);
-app.use('/api/users', userRoutes);          // 🧑 User profile
-app.use('/api/bookings', bookingsRouter);   // 📅 Booking endpoints
-app.use('/api/availability', availabilityRouter); // 📆 Time slot availability
-app.use('/api/admin', adminRoutes);         // 🛡️ Admin panel routes
+app.use('/api/users', userRoutes);
+app.use('/api/bookings', bookingsRouter);
+app.use('/api/availability', availabilityRouter);
+app.use('/api/admin', adminRoutes);
 app.use('/api/payment', paymentRoutes);
 
 // ✅ Basic Test Route
 app.get('/', (req, res) => {
-  res.send('Server is running!');
+  res.send('✅ BookEase Backend is Running!');
 });
 
 // ✅ DB Test Route
@@ -49,4 +59,6 @@ app.use(errorHandler);
 
 // ✅ Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => console.log(`🚀 Server running on http://localhost:${PORT}`));
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
+});
