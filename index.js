@@ -18,8 +18,8 @@ const app = express();
 
 // ✅ CORS Configuration
 const allowedOrigins = [
-  'http://localhost:5173', // Local dev
-  'https://bookease-client-uxab.vercel.app' // Vercel frontend
+   // for local development
+  'https://bookease-client-uxab.vercel.app' // for production frontend
 ];
 
 app.use(cors({
@@ -38,7 +38,7 @@ app.use('/api/availability', availabilityRouter);
 app.use('/api/admin', adminRoutes);
 app.use('/api/payment', paymentRoutes);
 
-// ✅ Test Route
+// ✅ Basic Test Route
 app.get('/', (req, res) => {
   res.send('✅ BookEase Backend is Running!');
 });
@@ -57,8 +57,8 @@ app.get('/api/time', async (req, res) => {
 // ✅ Global Error Handler
 app.use(errorHandler);
 
-// ✅ Start Server for Render
+// ✅ Start Server
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, '0.0.0.0', () => {
-  console.log(`🚀 Server running on http://0.0.0.0:${PORT}`);
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on http://localhost:${PORT}`);
 });
