@@ -9,7 +9,10 @@ const pool = new Pool({
   user: process.env.DB_USER,
   password: process.env.DB_PASSWORD,
   database: process.env.DB_NAME,
-  port: Number(process.env.DB_PORT), // ✅ Ensure it's a number
+  port: Number(process.env.DB_PORT),
+  ssl: {
+    rejectUnauthorized: false // ✅ Required for PostgreSQL on Render
+  }
 });
 
 pool.connect()
